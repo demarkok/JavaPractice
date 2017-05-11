@@ -4,6 +4,7 @@ package ru.spbau.kaysin.game;
 import static java.lang.System.exit;
 import static ru.spbau.kaysin.game.GameModel.N;
 
+import java.time.Duration;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -13,6 +14,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import org.reactfx.util.FxTimer;
 import ru.spbau.kaysin.game.GameModel.ButtonState;
 import ru.spbau.kaysin.game.GameModel.GameState;
 
@@ -65,8 +67,10 @@ public class Main extends Application {
 
                        if (stateBefore == GameState.SECOND_BUTTON_CHOOSING) {
                             if (game.getButtonState(posI, posJ) == ButtonState.FREE) {
-                                game.releaseChosenButton();
-                                game.releaseButton(posI, posJ);
+                                FxTimer.runLater(Duration.ofMillis(500), () -> {
+                                    game.releaseChosenButton();
+                                    game.releaseButton(posI, posJ);
+                                });
                             }
                        }
                        if (stateAfter == GameState.END) {
